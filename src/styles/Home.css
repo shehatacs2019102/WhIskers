@@ -1,0 +1,41 @@
+.home{
+    
+    /* background-image: url('../assets/cat-instagram-captions-64ff2dfa47e9a.jpg'); */
+    color: #004445;
+    /* background-size: cover; */
+    background: whitesmoke;
+    width: 100vw; 
+    height: 100%;
+     
+    
+    display: flex;
+    flex-direction: column;
+    
+    
+    
+    
+    
+}
+
+.cards{
+
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
+     padding: 40px; 
+
+}
+
+.home-top{
+    min-width: 400px;
+    min-height: 600px;
+    background: #004445;
+
+}
+
+.home-top img{
+
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+
+}

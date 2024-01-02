@@ -1,0 +1,22 @@
+.home{
+    
+    /* background-image: url('../assets/cat-instagram-captions-64ff2dfa47e9a.jpg'); */
+    color: #004445;
+    /* background-size: cover; */
+    background: whitesmoke;
+     width: 100%; 
+     height: 100%;
+     padding: 100px;  
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+    
+}
+
+.home-top{
+    min-width: 92%;
+    min-height: 600px;
+    background: #004445;
+
+}
