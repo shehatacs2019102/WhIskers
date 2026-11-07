@@ -1,0 +1,40 @@
+<header class="site-header on-dark">
+  <div class="container bar">
+    <a class="brand" routerLink="/" aria-label="Whiskers, home" (click)="close()">
+      <app-icon name="paw" [size]="28" />
+      <span class="brand-name">Whiskers</span>
+    </a>
+
+    <nav id="site-nav" class="nav" [class.open]="open()" aria-label="Main">
+      <ul>
+        @for (link of links; track link.path) {
+          <li>
+            <a
+              [routerLink]="link.path"
+              routerLinkActive="active"
+              ariaCurrentWhenActive="page"
+              [routerLinkActiveOptions]="{ exact: link.exact }"
+              (click)="close()"
+            >{{ link.label }}</a>
+          </li>
+        }
+        <li class="nav-cta-mobile">
+          <a class="btn btn--primary" routerLink="/appointments" (click)="close()">Book now</a>
+        </li>
+      </ul>
+    </nav>
+
+    <a class="btn btn--primary nav-cta" routerLink="/appointments">Book now</a>
+
+    <button
+      class="menu"
+      type="button"
+      aria-controls="site-nav"
+      [attr.aria-expanded]="open()"
+      aria-label="Menu"
+      (click)="toggle()"
+    >
+      <app-icon name="menu" />
+    </button>
+  </div>
+</header>

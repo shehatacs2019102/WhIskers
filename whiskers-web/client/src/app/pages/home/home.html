@@ -1,0 +1,93 @@
+<section class="hero on-dark" aria-labelledby="hero-title">
+  <div class="container hero-grid">
+    <div class="hero-text">
+      <p class="eyebrow">Care just for cats</p>
+      <h1 id="hero-title" class="display-xl">Gentle care for every whisker</h1>
+      <p class="lead">
+        Check-ups, grooming and boarding in a quiet space made for cats. Book online in a minute.
+      </p>
+      <div class="actions">
+        <a class="btn btn--primary btn--lg" routerLink="/appointments">Book an appointment</a>
+        <a class="btn btn--outline btn--lg" routerLink="/" fragment="services">See our services</a>
+      </div>
+    </div>
+    <img
+      class="hero-photo"
+      src="images/hero-kitten.jpg"
+      width="687"
+      height="687"
+      alt="A white kitten resting on a blue-grey blanket, looking up"
+      fetchpriority="high"
+    />
+  </div>
+</section>
+
+<section id="services" class="section container" aria-labelledby="services-title">
+  <div class="section-heading">
+    <h2 id="services-title" class="display-l">What we do</h2>
+    <p class="lead">Everything your cat needs, all under one roof.</p>
+  </div>
+  <ul class="cards">
+    @for (service of services; track service.title) {
+      <li class="card">
+        <span class="card-icon"><app-icon [name]="service.icon" [size]="28" /></span>
+        <h3 class="display-s">{{ service.title }}</h3>
+        <p>{{ service.text }}</p>
+        <a
+          class="card-link"
+          [routerLink]="service.link"
+          [queryParams]="service.serviceId ? { service: service.serviceId } : null"
+        >
+          Learn more <app-icon name="arrow-right" [size]="20" />
+          <span class="sr-only">about {{ service.title }}</span>
+        </a>
+      </li>
+    }
+  </ul>
+</section>
+
+<section class="about" aria-labelledby="about-title">
+  <div class="container about-grid">
+    <img
+      class="about-photo"
+      src="images/about-ragdoll.jpg"
+      width="1369"
+      height="978"
+      alt="A fluffy ragdoll cat resting on a soft blanket in warm light"
+      loading="lazy"
+    />
+    <div class="about-text">
+      <h2 id="about-title" class="display-l">A calmer visit, from the moment you arrive</h2>
+      <p class="lead">
+        Cats notice everything. So we keep things quiet, take our time and let your cat settle in
+        before we begin.
+      </p>
+      <ul class="benefits">
+        @for (benefit of benefits; track benefit) {
+          <li><app-icon name="check" [size]="24" /> {{ benefit }}</li>
+        }
+      </ul>
+      <a class="btn btn--secondary btn--lg" routerLink="/about">About Whiskers</a>
+    </div>
+  </div>
+</section>
+
+<section class="section container" aria-labelledby="steps-title">
+  <h2 id="steps-title" class="display-l">Booking takes three steps</h2>
+  <ol class="steps">
+    @for (step of steps; track step.title; let i = $index) {
+      <li>
+        <span class="step-number display-s" aria-hidden="true">{{ i + 1 }}</span>
+        <h3 class="step-title">{{ step.title }}</h3>
+        <p>{{ step.text }}</p>
+      </li>
+    }
+  </ol>
+</section>
+
+<section class="cta" aria-labelledby="cta-title">
+  <div class="container cta-inner">
+    <h2 id="cta-title" class="display-l">Ready to book your cat's next visit?</h2>
+    <a class="btn btn--secondary btn--lg" routerLink="/appointments">Book an appointment</a>
+  </div>
+</section>

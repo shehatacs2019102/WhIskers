@@ -1,0 +1,82 @@
+:host {
+  display: block;
+}
+
+.site-footer {
+  padding-block: 48px 32px;
+  background: var(--teal-900);
+  color: var(--text-on-dark-muted);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.columns {
+  display: grid;
+  gap: 32px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  color: var(--amber-500);
+  text-decoration: none;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--text-on-dark);
+}
+
+.brand-col p {
+  max-width: 32ch;
+  font-size: 1rem;
+}
+
+h2 {
+  margin-bottom: 12px;
+  font: 600 1rem/1.5 var(--font-body);
+  color: var(--text-on-dark);
+}
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-block: 6px;
+
+  app-icon {
+    color: var(--amber-500);
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--text-on-dark);
+    text-decoration: underline;
+  }
+}
+
+.legal {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--teal-700);
+  font-size: 0.75rem;
+}
+
+@media (min-width: 900px) {
+  .site-footer {
+    padding-block: 64px 32px;
+  }
+
+  .columns {
+    grid-template-columns: 1.4fr 1fr 1fr 1.3fr;
+    gap: 48px;
+  }
+}

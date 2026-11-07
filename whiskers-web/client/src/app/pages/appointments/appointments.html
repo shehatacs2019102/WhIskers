@@ -1,0 +1,232 @@
+@if (confirmation(); as booked) {
+  <section class="section container done" aria-labelledby="done-title">
+    <div class="panel done-card">
+      <span class="done-icon"><app-icon name="check" [size]="32" /></span>
+      <h1 id="done-title" class="display-l" tabindex="-1">You're booked!</h1>
+      <p class="lead">
+        Thanks, {{ booked.ownerName }}. We've saved {{ booked.catName }}'s visit and will see you
+        then.
+      </p>
+      <dl class="done-details">
+        <div><dt>Service</dt><dd>{{ booked.serviceName }}</dd></div>
+        <div><dt>When</dt><dd>{{ dateLabel() }} at {{ timeLabel() }}</dd></div>
+        <div><dt>Cat</dt><dd>{{ booked.catName }}</dd></div>
+        <div><dt>Booking number</dt><dd>#{{ booked.id }}</dd></div>
+      </dl>
+      <div class="done-actions">
+        <a class="btn btn--secondary" routerLink="/">Back to home</a>
+        <button class="btn btn--primary" type="button" (click)="bookAnother()">Book another</button>
+      </div>
+    </div>
+  </section>
+} @else {
+  <section class="page-header on-dark">
+    <div class="container">
+      <h1 class="display-l">Book an appointment</h1>
+      <p class="lead">Pick a service and a time. It only takes a minute.</p>
+    </div>
+  </section>
+
+  <form class="container booking" [formGroup]="details" (ngSubmit)="submit()" novalidate>
+    <div class="steps">
+      <!-- 1. Service -->
+      <fieldset class="panel">
+        <legend class="panel-title"><span class="num">1</span> Choose a service</legend>
+        @switch (servicesState()) {
+          @case ('loading') {
+            <p class="muted" role="status">Loading services…</p>
+          }
+          @case ('error') {
+            <p class="notice" role="alert">
+              We could not load our services.
+              <button class="link" type="button" (click)="retryServices()">Try again</button>
+            </p>
+          }
+          @default {
+            <div class="options">
+              @for (service of services(); track service.id) {
+                <label class="option" [class.selected]="serviceId() === service.id">
+                  <input
+                    type="radio"
+                    name="service"
+                    [value]="service.id"
+                    [checked]="serviceId() === service.id"
+                    (change)="chooseService(service.id)"
+                  />
+                  <span class="option-text">
+                    <span class="option-title">{{ service.name }}</span>
+                    <span class="option-detail">{{ service.detail }}</span>
+                  </span>
+                </label>
+              }
+            </div>
+          }
+        }
+      </fieldset>
+
+      <!-- 2. Date and time -->
+      <fieldset class="panel">
+        <legend class="panel-title"><span class="num">2</span> Pick a date and time</legend>
+        <div class="datetime">
+          <app-booking-calendar [selected]="date()" (selectedChange)="onDateChange($event)" />
+
+          <div class="times" aria-live="polite">
+            @switch (slotsState()) {
+              @case ('idle') {
+                <p class="muted">Choose a date to see the times that are open.</p>
+              }
+              @case ('loading') {
+                <p class="muted" role="status">Loading times…</p>
+              }
+              @case ('error') {
+                <p class="notice" role="alert">
+                  We could not load the times.
+                  <button class="link" type="button" (click)="retrySlots()">Try again</button>
+                </p>
+              }
+              @default {
+                <p class="times-date">{{ dateLabel() }}</p>
+                @if (!anyFree()) {
+                  <p class="muted">Nothing is open that day. Please try another date.</p>
+                } @else {
+                  @for (group of [
+                    { name: 'Morning', slots: morning() },
+                    { name: 'Afternoon', slots: afternoon() },
+                  ]; track group.name) {
+                    <div class="slot-group" role="group" [attr.aria-label]="group.name + ' times'">
+                      <p class="group-label">{{ group.name }}</p>
+                      <div class="slots">
+                        @for (slot of group.slots; track slot.time) {
+                          <button
+                            type="button"
+                            class="slot"
+                            [class.selected]="time() === slot.time"
+                            [disabled]="!slot.available"
+                            [attr.aria-pressed]="time() === slot.time"
+                            (click)="chooseTime(slot)"
+                          >{{ formatTime(slot.time) }}</button>
+                        }
+                      </div>
+                    </div>
+                  }
+                }
+              }
+            }
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 3. Details -->
+      <fieldset class="panel">
+        <legend class="panel-title"><span class="num">3</span> Your details</legend>
+        <div class="fields">
+          <div class="field">
+            <label for="ownerName">Your name</label>
+            <input
+              id="ownerName"
+              type="text"
+              formControlName="ownerName"
+              autocomplete="name"
+              placeholder="Full name"
+              [class.invalid]="showError('ownerName')"
+              [attr.aria-invalid]="showError('ownerName')"
+            />
+            @if (showError('ownerName')) {
+              <p class="error">{{ errorText('ownerName') }}</p>
+            }
+          </div>
+          <div class="field">
+            <label for="catName">Cat's name</label>
+            <input
+              id="catName"
+              type="text"
+              formControlName="catName"
+              placeholder="Name"
+              [class.invalid]="showError('catName')"
+              [attr.aria-invalid]="showError('catName')"
+            />
+            @if (showError('catName')) {
+              <p class="error">{{ errorText('catName') }}</p>
+            }
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              [class.invalid]="showError('email')"
+              [attr.aria-invalid]="showError('email')"
+            />
+            @if (showError('email')) {
+              <p class="error">{{ errorText('email') }}</p>
+            }
+          </div>
+          <div class="field">
+            <label for="phone">Phone (optional)</label>
+            <input
+              id="phone"
+              type="tel"
+              formControlName="phone"
+              autocomplete="tel"
+              placeholder="(000) 000-0000"
+              [class.invalid]="showError('phone')"
+              [attr.aria-invalid]="showError('phone')"
+            />
+            @if (showError('phone')) {
+              <p class="error">{{ errorText('phone') }}</p>
+            }
+          </div>
+          <div class="field wide">
+            <label for="notes">Notes (optional)</label>
+            <textarea
+              id="notes"
+              formControlName="notes"
+              placeholder="Allergies, nerves, favorite treats..."
+              [class.invalid]="showError('notes')"
+            ></textarea>
+            @if (showError('notes')) {
+              <p class="error">{{ errorText('notes') }}</p>
+            }
+          </div>
+        </div>
+      </fieldset>
+    </div>
+
+    <!-- Summary -->
+    <aside class="panel summary" aria-labelledby="summary-title">
+      <h2 id="summary-title" class="display-s">Your appointment</h2>
+      <ul class="summary-list">
+        <li>
+          <app-icon name="stethoscope" />
+          <span [class.muted]="!selectedService()">{{
+            selectedService()?.name ?? 'Choose a service'
+          }}</span>
+        </li>
+        <li>
+          <app-icon name="calendar" />
+          <span [class.muted]="!date()">{{ dateLabel() || 'Choose a date' }}</span>
+        </li>
+        <li>
+          <app-icon name="clock" />
+          <span [class.muted]="!time()">{{ timeLabel() || 'Choose a time' }}</span>
+        </li>
+      </ul>
+      <hr />
+      <button class="btn btn--primary btn--lg" type="submit" [disabled]="submitting()">
+        {{ submitting() ? 'Booking…' : 'Confirm booking' }}
+      </button>
+      <div aria-live="assertive">
+        @if (missingChoice()) {
+          <p class="error">Please choose a service, a date and a time.</p>
+        }
+        @if (submitError()) {
+          <p class="error">{{ submitError() }}</p>
+        }
+      </div>
+      <p class="note">Your booking is saved straight away. No payment is needed.</p>
+    </aside>
+  </form>
+}

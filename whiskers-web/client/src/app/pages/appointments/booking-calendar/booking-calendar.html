@@ -1,0 +1,45 @@
+<div class="calendar" role="group" aria-label="Choose a date">
+  <div class="month">
+    <button
+      type="button"
+      class="month-btn"
+      aria-label="Previous month"
+      [disabled]="!canGoPrev()"
+      (click)="shiftMonth(-1)"
+    >
+      <app-icon name="chevron-left" />
+    </button>
+    <p class="month-label" aria-live="polite">{{ viewMonth() | date: 'MMMM y' }}</p>
+    <button
+      type="button"
+      class="month-btn"
+      aria-label="Next month"
+      [disabled]="!canGoNext()"
+      (click)="shiftMonth(1)"
+    >
+      <app-icon name="chevron-right" />
+    </button>
+  </div>
+
+  <div class="grid">
+    @for (weekday of weekdays; track weekday) {
+      <span class="weekday" aria-hidden="true">{{ weekday }}</span>
+    }
+    @for (cell of cells(); track $index) {
+      @if (cell) {
+        <button
+          type="button"
+          class="day"
+          [class.today]="cell.today"
+          [class.selected]="cell.iso === selected()"
+          [disabled]="cell.disabled"
+          [attr.aria-pressed]="cell.iso === selected()"
+          [attr.aria-label]="cell.label"
+          (click)="pick(cell)"
+        >{{ cell.day }}</button>
+      } @else {
+        <span></span>
+      }
+    }
+  </div>
+</div>

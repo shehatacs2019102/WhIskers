@@ -1,0 +1,42 @@
+<footer class="site-footer on-dark">
+  <div class="container columns">
+    <div class="brand-col">
+      <a class="brand" routerLink="/" aria-label="Whiskers, home">
+        <app-icon name="paw" [size]="28" />
+        <span class="brand-name">Whiskers</span>
+      </a>
+      <p>Calm, gentle care for cats and the people who love them.</p>
+    </div>
+
+    <nav aria-label="Footer">
+      <h2>Explore</h2>
+      <ul>
+        <li><a routerLink="/">Home</a></li>
+        <li><a routerLink="/appointments">Appointments</a></li>
+        <li><a routerLink="/about">About</a></li>
+        <li><a routerLink="/store">Store</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <h2>Opening hours</h2>
+      <ul>
+        <li>Mon – Sat: 9 AM – 6 PM</li>
+        <li>Sunday: Closed</li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Contact</h2>
+      <ul>
+        <li><app-icon name="phone" [size]="20" /> (000) 000-0000</li>
+        <li><app-icon name="mail" [size]="20" /> hello&#64;whiskers.example</li>
+        <li><app-icon name="map-pin" [size]="20" /> 123 Placeholder St, Your City</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container legal">
+    <p>© {{ year }} Whiskers. All rights reserved.</p>
+  </div>
+</footer>
