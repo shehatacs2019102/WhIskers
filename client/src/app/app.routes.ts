@@ -15,8 +15,7 @@ export const routes: Routes = [
   {
     path: 'about',
     title: 'About | Whiskers',
-    data: { heading: 'About Whiskers' },
-    loadComponent: () => import('./pages/coming-soon/coming-soon').then((m) => m.ComingSoon),
+    loadComponent: () => import('./pages/about/about').then((m) => m.About),
   },
   {
     path: 'store',

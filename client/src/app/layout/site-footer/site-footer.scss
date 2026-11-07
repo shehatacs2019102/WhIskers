@@ -63,6 +63,14 @@ a {
   }
 }
 
+.legal a {
+  text-decoration: underline;
+}
+
+.legal p + p {
+  margin-top: 4px;
+}
+
 .legal {
   margin-top: 40px;
   padding-top: 24px;
