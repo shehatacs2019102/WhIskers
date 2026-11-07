@@ -1,7 +1,7 @@
 # Whiskers
 
 A booking website for a cat care business: a marketing home page and an appointment booking flow.
-Built from the [Whiskers Figma design](https://www.figma.com/design/T7YRCVhfOnwUXTQ5RgdQgn).
+Designed in Figma first (home and booking screens, desktop and mobile), then built here.
 
 - **Frontend:** Angular 21 (standalone components, signals, reactive forms, lazy-loaded routes), SCSS
 - **Backend:** ASP.NET Core 10 Web API, Entity Framework Core, SQLite
