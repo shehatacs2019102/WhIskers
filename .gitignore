@@ -1,24 +1,23 @@
-# Logs
-logs
+# .NET
+bin/
+obj/
+*.user
+.vs/
+
+# Local SQLite database (created on first run)
+*.db
+*.db-shm
+*.db-wal
+
+# Angular / Node
+node_modules/
+dist/
+.angular/
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
+# Editors and OS
+.idea/
 .vscode/*
 !.vscode/extensions.json
-.idea
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+Thumbs.db
