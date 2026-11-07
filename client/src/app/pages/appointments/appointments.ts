@@ -13,7 +13,7 @@ import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { catchError, of, switchMap, tap } from 'rxjs';
 
-import { ApiService } from '../../core/api.service';
+import { API_CLIENT } from '../../core/api-client';
 import { formatLongDate, formatTime12, toStartsAt } from '../../core/date-utils';
 import { AppointmentConfirmation, Service, Slot } from '../../core/models';
 import { IconComponent } from '../../shared/icon/icon';
@@ -40,7 +40,7 @@ const FIELD_ERRORS: Record<DetailField, Record<string, string>> = {
   styleUrl: './appointments.scss',
 })
 export class Appointments {
-  private readonly api = inject(ApiService);
+  private readonly api = inject(API_CLIENT);
   private readonly route = inject(ActivatedRoute);
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly injector = inject(Injector);

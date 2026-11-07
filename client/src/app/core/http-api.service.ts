@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import type { ApiClient } from './api-client';
 import {
   AppointmentConfirmation,
   Availability,
@@ -13,7 +14,7 @@ import {
 const API_BASE = '/api';
 
 @Injectable({ providedIn: 'root' })
-export class ApiService {
+export class HttpApiService implements ApiClient {
   private readonly http = inject(HttpClient);
 
   getServices(): Observable<Service[]> {

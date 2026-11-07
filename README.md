@@ -3,6 +3,8 @@
 A booking website for a cat care business. Visitors browse the services, pick a date and time on a
 calendar, and book an appointment that is saved by an API.
 
+**Live demo: <https://shehatacs2019102.github.io/WhIskers/>**
+
 It is a concept project: the business details (services, hours, phone, email, address) are placeholders.
 
 <p align="center">
@@ -20,7 +22,7 @@ It is a concept project: the business details (services, hours, phone, email, ad
 ## Highlights
 
 - **A real booking flow:** choose a service, pick a date and time, enter your details, get a confirmation.
-- **Rules enforced on the server, not just in the browser:**
+- **Booking rules, implemented in the .NET API and covered by tests:**
   - open Monday to Saturday, 9:00 to 12:00 and 13:00 to 18:00, in 30-minute slots
   - a service must finish before lunch or closing (a 90-minute groom cannot start at 11:00)
   - no double bookings, including overlaps between services of different lengths
@@ -28,7 +30,7 @@ It is a concept project: the business details (services, hours, phone, email, ad
   - if two people pick the same time, one gets a clear "just taken" message and the slots refresh
 - **Responsive and accessible:** works from phone to desktop, with keyboard support, labelled form fields,
   visible focus, and screen reader announcements for errors and confirmations.
-- **Tested:** 21 Angular tests and 32 .NET tests, including integration tests that run the real API in memory.
+- **Tested:** 39 Angular tests and 32 .NET tests, including integration tests that run the real API in memory.
 
 ## Tech
 
@@ -37,6 +39,7 @@ It is a concept project: the business details (services, hours, phone, email, ad
 | Frontend | Angular 21 (standalone components, signals, reactive forms, lazy-loaded routes), TypeScript, SCSS |
 | Backend | ASP.NET Core 10 Web API, Entity Framework Core (migrations), SQLite |
 | Testing | Vitest, xUnit, `WebApplicationFactory` |
+| Hosting | GitHub Pages, deployed by GitHub Actions on every push to `main` |
 | Design | Figma (design tokens carried into the code as CSS variables) |
 
 ## Project layout
@@ -52,6 +55,7 @@ It is a concept project: the business details (services, hours, phone, email, ad
 │       ├── pages/      home, appointments (with calendar), coming-soon
 │       └── shared/     icon component
 ├── docs/           Screenshots used in this README
+├── .github/        GitHub Actions workflow that tests and publishes the site
 └── Whiskers.slnx   Solution file for the API and its tests
 ```
 
@@ -85,7 +89,7 @@ Open <http://localhost:4200>. The Angular dev server forwards `/api` to the .NET
 ## Run the tests
 
 ```bash
-cd client && npm test -- --watch=false      # Angular, 21 tests
+cd client && npm test -- --watch=false      # Angular, 39 tests
 cd api.tests && dotnet test                 # .NET, 32 tests
 ```
 
@@ -118,9 +122,6 @@ In development the OpenAPI document is at `/openapi/v1.json`.
 - **Email confirmations.** A booking is saved but no email is sent. The UI says so.
 - **Staff login** and an admin view of bookings, plus cancelling or rescheduling.
 - **About and Store pages.** They show a placeholder.
-- **Deployment.** For production, serve the built Angular app (`npm run build`) from the same host as the API,
-  or set the allowed origin in `api/appsettings.json`, and swap SQLite for SQL Server or PostgreSQL by changing the
-  EF Core provider and connection string.
 
 ## History
 
